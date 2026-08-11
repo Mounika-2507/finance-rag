@@ -1,0 +1,10 @@
+.env
+__pycache__/
+.venv/
+chroma_db/
+debug_check.py
+debug_full.py
+debug_retrieval.py
+explore.py
+chunk_test.py
+.DS_Store
