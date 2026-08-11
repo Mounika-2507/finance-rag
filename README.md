@@ -103,8 +103,17 @@ Cross-checked directly against the PDFs (not just trusted from the app):
   these particular press releases report only consolidated (whole-company)
   figures, with no segment or geography breakdown table.
 
+
 ## Screenshots
 
-_(add screenshots here: upload+index confirmation, an answered question
-with sources, the trap question refusal, and the persistence proof —
-app restarted with no re-upload, still answering correctly)_
+**Upload & Index**
+![Upload and index confirmation](screenshots/upload_index.png)
+
+**Answer with sources**
+![Answer with cited sources](screenshots/sources.png)
+
+**Trap question correctly refused**
+![Trap question refusal](screenshots/trap_question.png)
+
+**Persistence — restarted app, no re-upload, still answers correctly**
+![Persistence check](screenshots/persistence_check.png)
