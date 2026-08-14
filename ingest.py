@@ -9,7 +9,7 @@ from chromadb.utils import embedding_functions
 
 load_dotenv()  # reads your .env file so OPENAI_API_KEY becomes available
 
-CHROMA_DIR = "chroma_db"       # folder where the database gets saved to disk
+CHROMA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chroma_db")    # folder where the database gets saved to disk
 COLLECTION_NAME = "finance_rag"
 
 CHUNK_SIZE = 1100
@@ -70,7 +70,19 @@ def store_chunks(chunks):
 
     collection.add(ids=ids, documents=documents, metadatas=metadatas)
     print(f"Stored {len(chunks)} chunks in ChromaDB.")
-    
+def ingest_files(file_paths):
+    """
+    Full pipeline for a list of PDF file paths: load -> chunk -> store.
+    Returns a summary dict, e.g. {"files": 4, "chunks": 116}.
+    """
+    all_chunks = []
+    for path in file_paths:
+        pages = load_pdf_pages(path)
+        chunks = chunk_pages(pages)
+        all_chunks.extend(chunks)
+
+    store_chunks(all_chunks)
+    return {"files": len(file_paths), "chunks": len(all_chunks)}   
 
 if __name__ == "__main__":
     pdf_files = glob.glob("data/*.pdf")  # finds every .pdf in the data folder automatically
