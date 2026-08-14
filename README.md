@@ -40,6 +40,39 @@ streamlit run app.py
 
 Open the local URL Streamlit prints, upload the 4 PDFs from `data/`, click
 **Index uploaded files**, then ask questions.
+## Optional bonus — FastAPI backend
+
+The RAG logic is also exposed as a FastAPI service, and the Streamlit UI
+calls it over HTTP instead of running the logic in-process.
+
+**Run the API:**
+```bash
+cd api
+uvicorn main:app --reload
+```
+Interactive docs: http://localhost:8000/docs
+
+**Endpoints:**
+
+| Method | Endpoint | Input | Output |
+|---|---|---|---|
+| POST | `/ingest` | one or more PDF files | `{"files": 4, "chunks": 116}` |
+| POST | `/ask` | `{"question": "...", "top_k": 4}` | `{"answer": "...", "sources": [{"file": "...", "page": 7}]}` |
+| GET | `/stats` | — | collection name, total chunks, embedding model, LLM model |
+
+**To run the full app with the bonus backend active**, two terminals are needed:
+```bash
+# Terminal 1
+cd api
+uvicorn main:app --reload
+
+# Terminal 2 (from project root)
+streamlit run app.py
+```
+`app.py` sends requests to `http://localhost:8000` for indexing and asking
+questions, rather than importing `ingest.py`/`rag.py` directly.
+
+All three endpoints were tested via the Swagger docs page and
 
 ## Design choices
 
